@@ -118,73 +118,29 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
-    // var output = [];
-    // var it = arguments[2];
-    
-    // for(var i = 0; i < array.length; i++)
-    // {
-    //   var val = array[i];
-    //   if(it !== undefined)
-    //   {
-    //     val = it(val);
-    //   }
+    var output = [];
+    var transf = [];
+    var tf = [];
 
-    //   if(!output.includes(val)) output.push(val);
-    // }
-
-    // return output;
-
-    // var tf = [];
-    // for(var i = 0; i < array.length; i++)
-    // {
-    //   // var v = array[i];
-    //   // tf.push(v);
-    //   tf[i]=array[i];
-    // }
-
-    // var tf = array.slice(0); 
-
-    // console.log(typeof arguments[0]);   
-    // console.log(typeof arguments[1]);
-    // console.log(typeof arguments[2]);
-
-    // if(typeof arguments[2] === 'function') 
-    //   {
-    //     console.log('ass');
-    //     _.each(tf, arguments[2]);
-    //   }
-    // for(var i = 0; i < tf.length; i++)
-    // {
-    //   if(!output.includes(tf[i])) output.push(tf[i]);
-    // }
-    // return output;
-
-    var result = [];
-    var transformed = [];
-    var found;
-
-    if (isSorted)
+    if(arguments.length === 3) 
     {
       _.each(array, function(element) {
-        if(_.indexOf(transformed, iterator(element)) === -1)
-        {
-          transformed.push(iterator(element));
-          result.push(element);
-        }
+        tf.push(iterator(element));
       });
     }
     else
     {
-      _.each(array, function(element) {
-        found = _.indexOf(result, element);
-        if (found === -1)
-        {
-          result.push(element);
-        }
-      });
+      tf = array.slice(0);
     }
-
-    return result;
+    for(var i = 0; i < tf.length; i++)
+    {
+      if(!transf.includes(tf[i])) 
+      {
+        transf.push(tf[i]);
+        output.push(array[i]);
+      }
+    }
+    return output;
   };
 
 
@@ -285,30 +241,6 @@
     }
 
     return sv;
-
-    // var sv;
-
-    // if(arguments[2] === undefined)
-    // {
-    //   sv = collection[0];
-    //   var sub = collection.slice(1);
-
-    //   for(var i = 0; i < sub.length; i++)
-    //   {
-    //     sv = iterator(sv, sub[i]);
-    //   }
-    // }
-    // else
-    // {
-    //   sv = accumulator;
-
-    //   for(var i = 0; i < collection.length; i++)
-    //   {
-    //     sv = iterator(sv, collection[i]);
-    //   }
-    // }
-
-    // return sv;
   };
 
   // Determine if the array or object contains a given value (using `===`).
@@ -401,16 +333,6 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
-    // var newstuff = arguments.slice(1);
-
-    // for(var i = 0; i < newstuff.length; i++)
-    // {
-    //   for(var key in newstuff[i])
-    //   {
-    //     obj[key] = newstuff[i][key];
-    //   }
-    // }
-
     for(var i = 1; i < arguments.length; i++)
     {
       for(var key in arguments[i])
@@ -513,21 +435,6 @@
       arg.push(arguments[i]);
     }
     window.setTimeout(function(){func.apply(this, arg);}, wait);
-    // clock.tick(wait);
-    // func.apply(this, arg);
-
-    // var start = new Date();
-    // var current = new Date();
-    // var start = new Date().getTime();
-    // for (var i = 0; i < 1e7; i++)
-    // {
-    //   if ((new Date().getTime() - start) > (wait+3))
-    //   {
-    //     break;
-    //   }
-    // }
-
-    // func.apply(this, arg);
   };
 
 
